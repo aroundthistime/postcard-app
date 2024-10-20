@@ -5,6 +5,7 @@ import Category from "../components/Category";
 
 const Container = styled.View`
   flex: 1;
+  padding: 0 ${({ theme }) => theme.padding.horizontal};
 `;
 
 const CategoryList = styled.ScrollView`

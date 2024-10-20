@@ -1,7 +1,7 @@
 const theme = {
   padding: {
-    horizontal: 16,
-    vertical: 0,
+    horizontal: "16px",
+    vertical: "0px",
   },
   colors: {
     black: "#191919",
