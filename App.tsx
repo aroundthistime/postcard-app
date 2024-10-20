@@ -5,6 +5,7 @@
  * @format
  */
 
+import { ThemeProvider } from "@emotion/react";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import type { PropsWithChildren } from "react";
@@ -25,38 +26,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from "react-native/Libraries/NewAppScreen";
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({ children, title }: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === "dark";
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}
-      >
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}
-      >
-        {children}
-      </Text>
-    </View>
-  );
-}
+import theme from "./src/styles/theme";
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === "dark";
@@ -67,7 +37,9 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-      <SafeAreaView style={backgroundStyle} />
+      <ThemeProvider theme={theme}>
+        <SafeAreaView style={backgroundStyle}></SafeAreaView>
+      </ThemeProvider>
     </NavigationContainer>
   );
 }
