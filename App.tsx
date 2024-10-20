@@ -44,7 +44,12 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme}>
-        <SafeAreaView style={backgroundStyle}>
+        <SafeAreaView
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+        >
           <Stack.Navigator initialRouteName={ScreenName.Categories}>
             <Stack.Screen
               name={ScreenName.Categories}
