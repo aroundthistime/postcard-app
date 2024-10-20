@@ -2,7 +2,7 @@ import styled from "@emotion/native";
 import TitleText from "../TitleText";
 
 const Container = styled.View`
-  margin: 32 0 16 0;
+  margin: 32px 0 16px 0;
 `;
 
 interface Props {

@@ -9,9 +9,9 @@ const Container = styled.TouchableOpacity`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4;
-  border: 2 solid #1d3421;
-  border-radius: 48;
+  gap: 4px;
+  border: 2px solid #1d3421;
+  border-radius: 48px;
 `;
 
 const Background = styled(ImageBackground)`
@@ -23,11 +23,11 @@ const LetterBox = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 44;
-  height: 48;
+  width: 44px;
+  height: 48px;
   background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 8;
-  border: 1 solid #488252;
+  border-radius: 8px;
+  border: 1px solid #488252;
 `;
 
 const Letter = styled.Text`

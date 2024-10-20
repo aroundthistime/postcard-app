@@ -11,7 +11,7 @@ const CategoryList = styled.ScrollView`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 8;
+  gap: 8px;
 `;
 
 const CategoriesScreen = () => {
