@@ -45,11 +45,16 @@ function App(): React.JSX.Element {
     <NavigationContainer>
       <ThemeProvider theme={theme}>
         <SafeAreaView style={backgroundStyle}>
-          <Stack.Screen
-            name={ScreenName.Categories}
-            component={CategoriesScreen}
-          />
-          <Stack.Screen name={ScreenName.Category} component={CategoryScreen} />
+          <Stack.Navigator initialRouteName={ScreenName.Categories}>
+            <Stack.Screen
+              name={ScreenName.Categories}
+              component={CategoriesScreen}
+            />
+            <Stack.Screen
+              name={ScreenName.Category}
+              component={CategoryScreen}
+            />
+          </Stack.Navigator>
         </SafeAreaView>
       </ThemeProvider>
     </NavigationContainer>
