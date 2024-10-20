@@ -1,5 +1,5 @@
 import styled from "@emotion/native/macro";
-import { type Category as CategoryType } from "../../types/Category";
+import { Category as CategoryType } from "../../types/Category";
 import { ImageBackground } from "react-native";
 import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -42,6 +42,15 @@ interface Props {
   category: CategoryType;
 }
 
+const images: Record<CategoryType, any> = {
+  [CategoryType.Birthday]: require("../../assets/images/category/birthday.png"),
+  [CategoryType.Season]: require("../../assets/images/category/season.png"),
+  [CategoryType.Health]: require("../../assets/images/category/health.png"),
+  [CategoryType.Happiness]: require("../../assets/images/category/happiness.png"),
+  [CategoryType.Comfort]: require("../../assets/images/category/comfort.png"),
+  [CategoryType.Love]: require("../../assets/images/category/love.png"),
+};
+
 const Category = ({ category }: Props) => {
   const navigation = useNavigation();
 
@@ -53,10 +62,7 @@ const Category = ({ category }: Props) => {
 
   return (
     <Container onPress={onPress}>
-      <Background
-        src={require(`../../assets/images/category/${category}.png`)}
-        resizeMode="cover"
-      >
+      <Background source={images[category]} resizeMode="cover">
         {category.split("").map((letter, index) => (
           <LetterBox key={index}>
             <Letter>{letter}</Letter>
