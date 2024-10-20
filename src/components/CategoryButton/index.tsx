@@ -1,22 +1,25 @@
 import styled from "@emotion/native/macro";
-import { Category as CategoryType } from "../../types/Category";
+import { Category } from "../../types/Category";
 import { ImageBackground } from "react-native";
 import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenName } from "../../types/Screen";
 
 const Container = styled.TouchableOpacity`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
   border: 2px solid #1d3421;
+  aspect-ratio: 4/5;
   border-radius: 48px;
+  flex: 1;
+  overflow: hidden;
 `;
 
 const Background = styled(ImageBackground)`
   flex: 1;
-  justify-content: "center";
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
 `;
 
 const LetterBox = styled.View`
@@ -39,19 +42,19 @@ const Letter = styled.Text`
 `;
 
 interface Props {
-  category: CategoryType;
+  category: Category;
 }
 
-const images: Record<CategoryType, any> = {
-  [CategoryType.Birthday]: require("../../assets/images/category/birthday.png"),
-  [CategoryType.Season]: require("../../assets/images/category/season.png"),
-  [CategoryType.Health]: require("../../assets/images/category/health.png"),
-  [CategoryType.Happiness]: require("../../assets/images/category/happiness.png"),
-  [CategoryType.Comfort]: require("../../assets/images/category/comfort.png"),
-  [CategoryType.Love]: require("../../assets/images/category/love.png"),
+const images: Record<Category, any> = {
+  [Category.Birthday]: require("../../assets/images/category/birthday.png"),
+  [Category.Season]: require("../../assets/images/category/season.png"),
+  [Category.Health]: require("../../assets/images/category/health.png"),
+  [Category.Happiness]: require("../../assets/images/category/happiness.png"),
+  [Category.Comfort]: require("../../assets/images/category/comfort.png"),
+  [Category.Love]: require("../../assets/images/category/love.png"),
 };
 
-const Category = ({ category }: Props) => {
+const CategoryButton = ({ category }: Props) => {
   const navigation = useNavigation();
 
   const onPress = () => {
@@ -73,4 +76,4 @@ const Category = ({ category }: Props) => {
   );
 };
 
-export default memo(Category);
+export default memo(CategoryButton);
