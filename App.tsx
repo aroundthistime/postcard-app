@@ -27,6 +27,12 @@ import {
   ReloadInstructions,
 } from "react-native/Libraries/NewAppScreen";
 import theme from "./src/styles/theme";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import CategoriesScreen from "./src/screens/CategoriesScreen";
+import { ScreenName } from "./src/types/Screen";
+import CategoryScreen from "./src/screens/CategoryScreen";
+
+const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === "dark";
@@ -38,7 +44,13 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme}>
-        <SafeAreaView style={backgroundStyle}></SafeAreaView>
+        <SafeAreaView style={backgroundStyle}>
+          <Stack.Screen
+            name={ScreenName.Categories}
+            component={CategoriesScreen}
+          />
+          <Stack.Screen name={ScreenName.Category} component={CategoryScreen} />
+        </SafeAreaView>
       </ThemeProvider>
     </NavigationContainer>
   );
