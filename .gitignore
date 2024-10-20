@@ -1,0 +1,140 @@
+# Node
+node_modules/
+package-lock.json
+yarn-error.log
+npm-debug.log*
+
+# iOS / CocoaPods
+ios/Pods/
+ios/Podfile.lock
+ios/build/
+**/.xcode.env.local
+
+# Xcode
+!**/*.xcodeproj
+!**/*.pbxproj
+!**/*.xcworkspacedata
+!**/*.xcsettings
+!**/*.xcscheme
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
+
+# Android
+.gradle
+local.properties
+*.iml
+/android/.gradle/
+/android/app/build/
+android/app/src/main/res/raw/
+**/android/build/
+
+# React Native build artifacts
+/packages/react-native/ReactAndroid/build/
+/packages/react-native/ReactAndroid/.cxx/
+/packages/react-native/ReactAndroid/gradle/
+/packages/react-native/ReactAndroid/gradlew
+/packages/react-native/ReactAndroid/gradlew.bat
+/packages/react-native/ReactAndroid/external-artifacts/build/
+/packages/react-native/ReactAndroid/external-artifacts/artifacts/
+/packages/react-native/ReactAndroid/hermes-engine/build/
+/packages/react-native/ReactAndroid/hermes-engine/.cxx/
+/packages/rn-tester/android/app/build/
+/packages/rn-tester/android/build/
+/packages/react-native-popup-menu-android/android/build/
+/packages/react-native-test-library/android/build/
+
+# Gradle
+/build/
+/packages/rn-tester/build
+/packages/rn-tester/android/app/.cxx/
+/packages/rn-tester/android/app/build/
+/packages/rn-tester/android/app/gradle/
+/packages/rn-tester/android/app/gradlew
+/packages/rn-tester/android/app/gradlew.bat
+
+# Buck
+.buckd
+buck-out
+/.lsp.buckd
+/.lsp-buck-out
+/packages/react-native/ReactAndroid/src/main/jni/prebuilt/lib/
+/packages/react-native/ReactAndroid/src/main/gen
+/.cpplsp.buckd
+
+# Android Studio
+.project
+.settings
+.classpath
+
+# Watchman
+.watchmanconfig
+
+# Test generated files
+*.js.meta
+/coverage
+/third-party
+/reports
+
+# Stack Dumps
+*.stackdump
+
+# Ruby Gems (Bundler)
+packages/react-native/vendor
+/packages/helloworld/vendor
+.ruby-version
+/**/.ruby-version
+vendor/
+
+# React Native assets
+*.apk
+*.aab
+
+# Temporary files
+*.tmp
+*.temp
+*.hprof
+
+# CircleCI
+.circleci/generated_config.yml
+
+# Additional SDKs
+/packages/react-native/sdks/download
+/packages/react-native/sdks/hermes
+/packages/react-native/sdks/hermesc
+/packages/react-native/sdks/hermes-engine/hermes-engine-from-local-source-dir.tar.gz
+
+# Visual Studio
+.vs
+
+# IDE configurations
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS X
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Local environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
