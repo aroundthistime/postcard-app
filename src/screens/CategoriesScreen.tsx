@@ -13,7 +13,6 @@ const Container = styled.View`
 const CategoriesScreen = () => {
   return (
     <Container>
-      <Header title={"카테고리를 고르세요."} />
       <FlatList
         data={Object.values(Category)}
         numColumns={2}
