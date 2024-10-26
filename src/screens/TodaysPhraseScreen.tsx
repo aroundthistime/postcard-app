@@ -6,6 +6,7 @@ import { getColors } from "react-native-image-colors";
 import { hexToHSL } from "../utils/color";
 import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
 import HslDebugger from "../components/HslDebugger";
+import { downloadImageFromUrl } from "../utils/file";
 
 const Container = styled.View`
   flex: 1;
@@ -94,6 +95,8 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
   const [s, setS] = useState("29");
   const [l, setL] = useState("41");
 
+  const imageUrl = SAMPLE_IMAGE_URL;
+
   const themeColor = useMemo(() => {
     if (h === undefined) return;
 
@@ -101,7 +104,7 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
   }, [h, s, l]);
 
   const extractHueValueFromImage = async () => {
-    const result = await getColors(SAMPLE_IMAGE_URL);
+    const result = await getColors(imageUrl);
     if (result.platform === "web") return;
 
     const dominantColor =
@@ -144,7 +147,9 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
       />
       <ButtonRow>
         <PrimaryButton>
-          <PrimaryButtonText>다운로드</PrimaryButtonText>
+          <PrimaryButtonText onPress={() => downloadImageFromUrl(imageUrl)}>
+            다운로드
+          </PrimaryButtonText>
         </PrimaryButton>
         <PrimaryButton>
           <PrimaryButtonText>공유하기</PrimaryButtonText>
