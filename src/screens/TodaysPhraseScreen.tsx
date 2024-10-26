@@ -79,7 +79,11 @@ const IcArrowRight = styled(IcArrowRightBase)`
   right: 16px;
 `;
 
-const SAMPLE_IMAGE_SOURCE = require("../assets/images/sample.png");
+/**
+ * @TODO Replace with actual image
+ */
+const SAMPLE_IMAGE_URL =
+  "https://s3-alpha-sig.figma.com/img/e244/9a7d/6401dc27f0f326432608f8badcf833b2?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=WlPRf~cGMCVlb66ssYuw0~CBgV~SSoQ6YAf2VmUYlAPOUgvZNf7MOm6J9tn7wghRCISewoXZ8z-oQ2cPq32rFSPM8fDe3rfozI9JPyLeOg3F7o-6IvMiPlH4-fnTNj4d-nabHmkfcBkkujVBKNKzBlBNUC0Vu2poj~QD-MawkVEN6w9ak9H~RsAxWvaCVPN1XPUBE7bmiykl8tFJ5u8z52V402OE8oo2J-K5vve1hKY0IueR2lPmCDnxgaIenqHMRJZHdY9HFvpFs1NZnR-5c8Dko-YRgdtmE-GFyMpgdsM0l1P-v7mQ0Ci~qLA9HoVSzxC-e4FfZG-AR-DklUbAQg__";
 
 interface Props {
   handleClose: () => void;
@@ -97,7 +101,7 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
   }, [h, s, l]);
 
   const extractHueValueFromImage = async () => {
-    const result = await getColors(SAMPLE_IMAGE_SOURCE);
+    const result = await getColors(SAMPLE_IMAGE_URL);
     if (result.platform === "web") return;
 
     const dominantColor =
@@ -119,7 +123,9 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
       <StatusBar backgroundColor={themeColor} />
       <TitleText>오늘의 문구 추천</TitleText>
       <PhraseImage
-        source={SAMPLE_IMAGE_SOURCE}
+        source={{
+          uri: SAMPLE_IMAGE_URL,
+        }}
         style={{
           ...Platform.select({
             ios: {
