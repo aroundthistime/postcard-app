@@ -29,10 +29,10 @@ import {
 import theme from "./src/styles/theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CategoriesScreen from "./src/screens/CategoriesScreen";
-import { ScreenName } from "./src/types/Screen";
+import { RootStackParamList, ScreenName } from "./src/types/Screen";
 import CategoryScreen from "./src/screens/CategoryScreen";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === "dark";
