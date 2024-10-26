@@ -3,7 +3,6 @@ import TitleText from "../TitleText";
 
 const Container = styled.View`
   margin-top: 32px;
-  margin-bottom: 8px;
 `;
 
 interface Props {

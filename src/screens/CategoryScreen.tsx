@@ -37,6 +37,9 @@ const CategoryScreen = ({
     <Container>
       <FlatList
         ListHeaderComponent={<Header title="원하는 이미지를 찾아보세요" />}
+        ListHeaderComponentStyle={{
+          marginBottom: 8,
+        }}
         data={imageUrls}
         numColumns={2}
         keyExtractor={(imageUrl) => imageUrl}
