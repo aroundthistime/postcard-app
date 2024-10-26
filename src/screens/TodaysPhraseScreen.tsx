@@ -6,7 +6,7 @@ import { getColors } from "react-native-image-colors";
 import { hexToHSL } from "../utils/color";
 import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
 import HslDebugger from "../components/HslDebugger";
-import { downloadImageFromUrl } from "../utils/file";
+import { downloadImageFromUrl, shareImage } from "../utils/file";
 
 const Container = styled.View`
   flex: 1;
@@ -151,7 +151,7 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
             다운로드
           </PrimaryButtonText>
         </PrimaryButton>
-        <PrimaryButton>
+        <PrimaryButton onPress={() => shareImage(imageUrl)}>
           <PrimaryButtonText>공유하기</PrimaryButtonText>
         </PrimaryButton>
       </ButtonRow>
