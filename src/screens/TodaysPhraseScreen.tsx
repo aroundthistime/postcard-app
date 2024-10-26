@@ -146,10 +146,8 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
         }}
       />
       <ButtonRow>
-        <PrimaryButton>
-          <PrimaryButtonText onPress={() => downloadImageFromUrl(imageUrl)}>
-            다운로드
-          </PrimaryButtonText>
+        <PrimaryButton onPress={() => downloadImageFromUrl(imageUrl)}>
+          <PrimaryButtonText>다운로드</PrimaryButtonText>
         </PrimaryButton>
         <PrimaryButton onPress={() => shareImage(imageUrl)}>
           <PrimaryButtonText>공유하기</PrimaryButtonText>
