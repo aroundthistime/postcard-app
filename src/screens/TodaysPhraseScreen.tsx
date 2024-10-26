@@ -81,7 +81,11 @@ const IcArrowRight = styled(IcArrowRightBase)`
 
 const SAMPLE_IMAGE_SOURCE = require("../assets/images/sample.png");
 
-const TodaysPhraseScreen = () => {
+interface Props {
+  handleClose: () => void;
+}
+
+const TodaysPhraseScreen = ({ handleClose }: Props) => {
   const [h, setH] = useState<number>();
   const [s, setS] = useState("29");
   const [l, setL] = useState("41");
@@ -140,7 +144,7 @@ const TodaysPhraseScreen = () => {
           <PrimaryButtonText>공유하기</PrimaryButtonText>
         </PrimaryButton>
       </ButtonRow>
-      <SecondaryButton>
+      <SecondaryButton onPress={handleClose}>
         <SecondaryButtonText>다른 문구 찾기</SecondaryButtonText>
         <IcArrowRight />
       </SecondaryButton>
