@@ -1,10 +1,11 @@
 import styled, { css } from "@emotion/native";
 import TitleTextBase from "../components/TitleText";
 import { Image, Platform } from "react-native";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import { getColors } from "react-native-image-colors";
 import { hexToHSL } from "../utils/color";
 import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
+import HslDebugger from "../components/HslDebugger";
 
 const Container = styled.View`
   flex: 1;
@@ -81,7 +82,15 @@ const IcArrowRight = styled(IcArrowRightBase)`
 const SAMPLE_IMAGE_SOURCE = require("../assets/images/sample.png");
 
 const TodaysPhraseScreen = () => {
-  const [backgroundColor, setBackgroundColor] = useState<string>();
+  const [h, setH] = useState<number>();
+  const [s, setS] = useState("29");
+  const [l, setL] = useState("41");
+
+  const backgroundColor = useMemo(() => {
+    if (h === undefined) return;
+
+    return `hsl(${h}, ${s}%, ${l}%)`;
+  }, [h, s, l]);
 
   const extractHueValueFromImage = async () => {
     const result = await getColors(SAMPLE_IMAGE_SOURCE);
@@ -89,8 +98,8 @@ const TodaysPhraseScreen = () => {
 
     const dominantColor =
       result.platform === "android" ? result.dominant : result.background;
-    const { h } = hexToHSL(dominantColor);
-    setBackgroundColor(`hsl(${h}, 20%, 40%)`);
+    const { h: extractedS } = hexToHSL(dominantColor);
+    setH(extractedS);
   };
 
   useLayoutEffect(() => {
@@ -134,6 +143,7 @@ const TodaysPhraseScreen = () => {
         <SecondaryButtonText>다른 문구 찾기</SecondaryButtonText>
         <IcArrowRight />
       </SecondaryButton>
+      <HslDebugger s={s} setS={setS} l={l} setL={setL} />
     </Container>
   );
 };
