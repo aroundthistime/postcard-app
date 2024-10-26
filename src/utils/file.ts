@@ -1,6 +1,7 @@
 import { Alert, PermissionsAndroid, Platform } from "react-native";
 import * as RNFS from "react-native-fs";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
+import { showToast } from "./toast";
 
 export const downloadImageFromUrl = async (
   url: string,
@@ -29,7 +30,7 @@ export const downloadImageFromUrl = async (
      * @see https://github.com/itinance/react-native-fs/issues/682#issuecomment-505814338
      */
     await CameraRoll.saveToCameraRoll(imagePath, "photo");
-    Alert.alert("성공?");
+    showToast("다운로드가 완료되었습니다");
   }
 };
 
