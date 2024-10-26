@@ -1,6 +1,6 @@
 import styled, { css } from "@emotion/native";
 import TitleTextBase from "../components/TitleText";
-import { Image, Platform } from "react-native";
+import { Image, Platform, StatusBar } from "react-native";
 import { useLayoutEffect, useMemo, useState } from "react";
 import { getColors } from "react-native-image-colors";
 import { hexToHSL } from "../utils/color";
@@ -86,7 +86,7 @@ const TodaysPhraseScreen = () => {
   const [s, setS] = useState("29");
   const [l, setL] = useState("41");
 
-  const backgroundColor = useMemo(() => {
+  const themeColor = useMemo(() => {
     if (h === undefined) return;
 
     return `hsl(${h}, ${s}%, ${l}%)`;
@@ -109,9 +109,10 @@ const TodaysPhraseScreen = () => {
   return (
     <Container
       style={{
-        backgroundColor,
+        backgroundColor: themeColor,
       }}
     >
+      <StatusBar backgroundColor={themeColor} />
       <TitleText>오늘의 문구 추천</TitleText>
       <PhraseImage
         source={SAMPLE_IMAGE_SOURCE}
