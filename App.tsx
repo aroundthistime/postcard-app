@@ -58,6 +58,7 @@ function App(): React.JSX.Element {
             <Stack.Screen
               name={ScreenName.Category}
               component={CategoryScreen}
+              options={({ route }) => ({ title: route.params.category })}
             />
           </Stack.Navigator>
         </SafeAreaView>
