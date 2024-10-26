@@ -7,7 +7,7 @@
 
 import { ThemeProvider } from "@emotion/react";
 import { NavigationContainer } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import type { PropsWithChildren } from "react";
 import {
   SafeAreaView,
@@ -31,15 +31,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CategoriesScreen from "./src/screens/CategoriesScreen";
 import { RootStackParamList, ScreenName } from "./src/types/Screen";
 import CategoryScreen from "./src/screens/CategoryScreen";
+import TodaysPhraseScreen from "./src/screens/TodaysPhraseScreen";
+import { Category } from "./src/types/Category";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === "dark";
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [checkedTodaysPhrase, setCheckedTodaysPhrase] = useState(false);
 
   return (
     <NavigationContainer>
@@ -50,17 +48,27 @@ function App(): React.JSX.Element {
             height: "100%",
           }}
         >
-          <Stack.Navigator initialRouteName={ScreenName.Categories}>
-            <Stack.Screen
-              name={ScreenName.Categories}
-              component={CategoriesScreen}
+          {checkedTodaysPhrase ? (
+            <Stack.Navigator initialRouteName={ScreenName.Categories}>
+              <Stack.Screen
+                name={ScreenName.Categories}
+                component={CategoriesScreen}
+              />
+              <Stack.Screen
+                name={ScreenName.Category}
+                component={CategoryScreen}
+              />
+              <Stack.Screen
+                name={ScreenName.Category}
+                component={CategoryScreen}
+                options={({ route }) => ({ title: route.params.category })}
+              />
+            </Stack.Navigator>
+          ) : (
+            <TodaysPhraseScreen
+              handleClose={() => setCheckedTodaysPhrase(true)}
             />
-            <Stack.Screen
-              name={ScreenName.Category}
-              component={CategoryScreen}
-              options={({ route }) => ({ title: route.params.category })}
-            />
-          </Stack.Navigator>
+          )}
         </SafeAreaView>
       </ThemeProvider>
     </NavigationContainer>
