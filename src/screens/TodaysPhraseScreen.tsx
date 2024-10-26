@@ -4,6 +4,7 @@ import { Image, Platform } from "react-native";
 import { useLayoutEffect, useState } from "react";
 import { getColors } from "react-native-image-colors";
 import { hexToHSL } from "../utils/color";
+import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
 
 const Container = styled.View`
   flex: 1;
@@ -63,10 +64,18 @@ const SecondaryButton = styled.TouchableOpacity`
   ${ButtonCss}
   height: 56px;
   background-color: rgba(0, 0, 0, 0.4);
+  padding: 0 36px;
 `;
 
 const SecondaryButtonText = styled(ButtonTextBase)`
   color: ${({ theme }) => theme.colors.white};
+`;
+
+const IcArrowRight = styled(IcArrowRightBase)`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 16px;
 `;
 
 const SAMPLE_IMAGE_SOURCE = require("../assets/images/sample.png");
@@ -104,6 +113,7 @@ const TodaysPhraseScreen = () => {
       </ButtonRow>
       <SecondaryButton>
         <SecondaryButtonText>다른 문구 찾기</SecondaryButtonText>
+        <IcArrowRight />
       </SecondaryButton>
     </Container>
   );
