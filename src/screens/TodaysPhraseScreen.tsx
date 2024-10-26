@@ -81,9 +81,28 @@ const IcArrowRight = styled(IcArrowRightBase)`
 const SAMPLE_IMAGE_SOURCE = require("../assets/images/sample.png");
 
 const TodaysPhraseScreen = () => {
+  const [backgroundColor, setBackgroundColor] = useState<string>();
+
+  const extractHueValueFromImage = async () => {
+    const result = await getColors(SAMPLE_IMAGE_SOURCE);
+    if (result.platform === "web") return;
+
+    const dominantColor =
+      result.platform === "android" ? result.dominant : result.background;
+    const { h } = hexToHSL(dominantColor);
+    setBackgroundColor(`hsl(${h}, 20%, 40%)`);
+  };
+
+  useLayoutEffect(() => {
+    extractHueValueFromImage();
+  }, []);
 
   return (
-    <Container>
+    <Container
+      style={{
+        backgroundColor,
+      }}
+    >
       <TitleText>오늘의 문구 추천</TitleText>
       <PhraseImage
         source={SAMPLE_IMAGE_SOURCE}
