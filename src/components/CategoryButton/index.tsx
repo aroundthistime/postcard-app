@@ -7,7 +7,7 @@ import { ScreenName } from "../../types/Screen";
 
 const Container = styled.TouchableOpacity`
   border: 2px solid #1d3421;
-  aspect-ratio: 4/5;
+  height: 200px;
   border-radius: 48px;
   flex: 1;
   overflow: hidden;
