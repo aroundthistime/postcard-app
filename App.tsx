@@ -53,6 +53,7 @@ function App(): React.JSX.Element {
               <Stack.Screen
                 name={ScreenName.Categories}
                 component={CategoriesScreen}
+                options={{ title: "카테고리" }}
               />
               <Stack.Screen
                 name={ScreenName.Category}

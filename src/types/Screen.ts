@@ -1,7 +1,7 @@
 import { Category } from "./Category";
 
 export enum ScreenName {
-  Categories = "카테고리",
+  Categories = "Categories",
   Category = "Category",
 }
 
