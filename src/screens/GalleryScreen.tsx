@@ -12,12 +12,18 @@ import { RootStackParamList, ScreenName } from "../types/Screen";
 import usePhraseImageInfiniteQuery from "../hooks/queries/usePhraseImageInfiniteQuery";
 import { useEffect, useMemo, useRef, useState } from "react";
 import styled from "@emotion/native/macro";
+import { css } from "@emotion/react";
+import IcArrowLeftBase from "../assets/images/icons/icArrowLeft.svg";
+import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
+
+const HORIZONTAL_PADDING = 32;
 
 const ContainerWithBackground = styled.ImageBackground`
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 16px;
 `;
 
 const PhraseImage = styled.Image`
@@ -25,9 +31,36 @@ const PhraseImage = styled.Image`
   border-radius: 16px;
 `;
 
-type Props = NativeStackScreenProps<RootStackParamList, ScreenName.Gallery>;
+const CarouselControlRow = styled.View`
+  width: 100%;
+  padding: 0px 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
 
-const CAROUSEL_HORIZONTAL_PADDING = 32;
+const CarouselControlButton = styled.TouchableOpacity`
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const IcArrowLeft = styled(IcArrowLeftBase)`
+  width: 24px;
+  height: 24px;
+`;
+
+const IcArrowRight = styled(IcArrowRightBase)`
+  width: 24px;
+  height: 24px;
+`;
+
+type Props = NativeStackScreenProps<RootStackParamList, ScreenName.Gallery>;
 
 const GalleryScreen = ({
   route: {
@@ -45,7 +78,7 @@ const GalleryScreen = ({
     return data?.pages.flat() ?? [];
   }, [data]);
 
-  const imageWidth = screenWidth - CAROUSEL_HORIZONTAL_PADDING * 2;
+  const imageWidth = screenWidth - HORIZONTAL_PADDING * 2;
 
   const getOffsetByIndex = (index: number) => {
     return index * imageWidth + 16 * index;
@@ -97,42 +130,28 @@ const GalleryScreen = ({
         )}
         contentContainerStyle={{
           gap: 16,
-          paddingHorizontal: CAROUSEL_HORIZONTAL_PADDING,
+          paddingHorizontal: HORIZONTAL_PADDING,
         }}
         style={{
           flexGrow: 0,
         }}
       />
-      <View
-        style={{
-          width: "100%",
-          height: 50,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <TouchableOpacity
+      <CarouselControlRow>
+        <CarouselControlButton
           onPress={() => {
             setCurrentIndex((prev) => Math.max(prev - 1, 0));
           }}
-          style={{
-            backgroundColor: "red",
-            width: 50,
-            height: 50,
-          }}
-        ></TouchableOpacity>
-        <TouchableOpacity
+        >
+          <IcArrowLeft />
+        </CarouselControlButton>
+        <CarouselControlButton
           onPress={() => {
             setCurrentIndex((prev) => Math.min(imageUrls.length - 1, prev + 1));
           }}
-          style={{
-            backgroundColor: "red",
-            width: 50,
-            height: 50,
-          }}
-        ></TouchableOpacity>
-      </View>
+        >
+          <IcArrowRight />
+        </CarouselControlButton>
+      </CarouselControlRow>
     </ContainerWithBackground>
   );
 };
