@@ -133,7 +133,7 @@ const GalleryScreen = ({
       source={{
         uri: imageUrls[currentIndex],
       }}
-      blurRadius={5}
+      blurRadius={20}
     >
       <FlatList
         ref={carouselRef}
