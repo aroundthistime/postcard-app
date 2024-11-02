@@ -128,6 +128,10 @@ const GalleryScreen = ({
     }
   }, [enteredImageUrl]);
 
+  const isShowLeftSwipeButton = currentIndex !== 0;
+  const isShowRightSwipeButton =
+    currentIndex !== imageUrls.length - 1 || isFetchingNextPage;
+
   return (
     <ContainerWithBackground
       source={{
@@ -178,7 +182,7 @@ const GalleryScreen = ({
         }}
       />
       <CarouselControlRow>
-        {currentIndex !== 0 && (
+        {isShowLeftSwipeButton && (
           <CarouselControlButton
             onPress={() => {
               setCurrentIndex((prev) => Math.max(prev - 1, 0));
@@ -188,7 +192,7 @@ const GalleryScreen = ({
             <IcArrowLeft />
           </CarouselControlButton>
         )}
-        {currentIndex !== imageUrls.length - 1 && (
+        {isShowRightSwipeButton && (
           <CarouselControlButton
             onPress={() => {
               setCurrentIndex((prev) =>
