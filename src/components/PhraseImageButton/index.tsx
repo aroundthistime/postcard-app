@@ -1,6 +1,12 @@
 import styled from "@emotion/native/";
-import { useNavigation } from "@react-navigation/native";
+import {
+  ParamListBase,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { memo } from "react";
+import { RootRouteProps, ScreenName } from "../../types/Screen";
 
 const Container = styled.TouchableOpacity`
   aspect-ratio: 160 / 224;
@@ -22,8 +28,14 @@ interface Props {
 
 const PhraseImageButton = ({ imageUrl }: Props) => {
   const navigation = useNavigation();
+  const route = useRoute<RootRouteProps<ScreenName.Category>>();
 
-  const onPress = () => {};
+  const onPress = () => {
+    navigation.navigate(ScreenName.Gallery, {
+      enteredImageUrl: imageUrl,
+      category: route.params.category,
+    });
+  };
 
   return (
     <Container onPress={onPress}>

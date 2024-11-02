@@ -7,6 +7,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
     "eslint-config-prettier",
+    "plugin:@tanstack/query/recommended",
   ],
   plugins: ["@typescript-eslint", "prettier", "react-hooks", "jest"],
   env: {
