@@ -145,6 +145,12 @@ const GalleryScreen = ({
         data={imageUrls}
         showsHorizontalScrollIndicator={false}
         scrollEnabled={false}
+        onEndReached={() => {
+          if (hasNextPage) {
+            fetchNextPage();
+          }
+        }}
+        onEndReachedThreshold={1}
         renderItem={({ item: imageUrl, index }) => (
           <PhraseImage
             source={{ uri: imageUrl }}
