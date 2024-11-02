@@ -1,13 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  View,
-  useWindowDimensions,
-  Platform,
-} from "react-native";
+import { FlatList, useWindowDimensions, Platform } from "react-native";
 import { RootStackParamList, ScreenName } from "../types/Screen";
 import usePhraseImageInfiniteQuery from "../hooks/queries/usePhraseImageInfiniteQuery";
 import { useEffect, useMemo, useRef, useState } from "react";
