@@ -36,10 +36,11 @@ const CarouselControlRow = styled.View`
   padding: 0px 32px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 `;
 
-const CarouselControlButton = styled.TouchableOpacity`
+const CarouselControlButton = styled.TouchableOpacity<{
+  $position: "left" | "right";
+}>`
   width: 48px;
   height: 48px;
   border-radius: 16px;
@@ -48,6 +49,9 @@ const CarouselControlButton = styled.TouchableOpacity`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${({ $position }) =>
+    `margin-${$position === "left" ? "right" : "left"}: auto;`}
 `;
 
 const IcArrowLeft = styled(IcArrowLeftBase)`
@@ -137,20 +141,28 @@ const GalleryScreen = ({
         }}
       />
       <CarouselControlRow>
-        <CarouselControlButton
-          onPress={() => {
-            setCurrentIndex((prev) => Math.max(prev - 1, 0));
-          }}
-        >
-          <IcArrowLeft />
-        </CarouselControlButton>
-        <CarouselControlButton
-          onPress={() => {
-            setCurrentIndex((prev) => Math.min(imageUrls.length - 1, prev + 1));
-          }}
-        >
-          <IcArrowRight />
-        </CarouselControlButton>
+        {currentIndex !== 0 && (
+          <CarouselControlButton
+            onPress={() => {
+              setCurrentIndex((prev) => Math.max(prev - 1, 0));
+            }}
+            $position="left"
+          >
+            <IcArrowLeft />
+          </CarouselControlButton>
+        )}
+        {currentIndex !== imageUrls.length - 1 && (
+          <CarouselControlButton
+            onPress={() => {
+              setCurrentIndex((prev) =>
+                Math.min(imageUrls.length - 1, prev + 1)
+              );
+            }}
+            $position="right"
+          >
+            <IcArrowRight />
+          </CarouselControlButton>
+        )}
       </CarouselControlRow>
     </ContainerWithBackground>
   );
