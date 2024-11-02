@@ -1,4 +1,4 @@
-import styled, { css } from "@emotion/native";
+import styled from "@emotion/native";
 import TitleTextBase from "../components/TitleText";
 import { Image, Platform, StatusBar } from "react-native";
 import { useLayoutEffect, useMemo, useState } from "react";

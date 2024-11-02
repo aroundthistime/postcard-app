@@ -89,7 +89,7 @@ type Props = NativeStackScreenProps<RootStackParamList, ScreenName.Gallery>;
 
 const GalleryScreen = ({
   route: {
-    params: { category, enteredImageIndex },
+    params: { category, enteredImageUrl },
   },
 }: Props) => {
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage, isLoading } =
@@ -97,7 +97,7 @@ const GalleryScreen = ({
   const carouselRef = useRef<FlatList>(null);
   const { width: screenWidth } = useWindowDimensions();
   const scrolledToEnteredImageRef = useRef(false);
-  const [currentIndex, setCurrentIndex] = useState(enteredImageIndex);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const imageUrls = useMemo(() => {
     return data?.pages.flat() ?? [];
@@ -118,6 +118,15 @@ const GalleryScreen = ({
     });
     scrolledToEnteredImageRef.current = true;
   }, [currentIndex]);
+
+  useEffect(() => {
+    const enteredImageIndex = imageUrls.findIndex(
+      (imageUrl) => imageUrl === enteredImageUrl
+    );
+    if (enteredImageIndex > 0) {
+      setCurrentIndex(enteredImageIndex);
+    }
+  }, [enteredImageUrl]);
 
   return (
     <ContainerWithBackground

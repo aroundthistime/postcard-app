@@ -10,7 +10,7 @@ export enum ScreenName {
 export type RootStackParamList = {
   [ScreenName.Categories]: undefined;
   [ScreenName.Category]: { category: Category };
-  [ScreenName.Gallery]: { enteredImageIndex: number; category: Category };
+  [ScreenName.Gallery]: { enteredImageUrl: string; category: Category };
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> =
