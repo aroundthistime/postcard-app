@@ -14,6 +14,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import styled, { css } from "@emotion/native/";
 import IcArrowLeftBase from "../assets/images/icons/icArrowLeft.svg";
 import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
+import PhraseImageDownloadButton from "../components/PhraseImageCtaButton/PhraseImageDownloadButton";
+import PhraseImageShareButton from "../components/PhraseImageCtaButton/PhraseImageShareButton";
 
 const HORIZONTAL_PADDING = 32;
 
@@ -25,9 +27,21 @@ const ContainerWithBackground = styled.ImageBackground`
   gap: 16px;
 `;
 
-const PhraseImage = styled.Image`
+const PhraseImage = styled.ImageBackground`
   aspect-ratio: 296 / 460;
   border-radius: 16px;
+  position: relative;
+const PhraseImageCtaButtonRow = styled.View<{ $isCurrentImage: boolean }>`
+  position: absolute;
+  bottom: 0;
+  ${({ $isCurrentImage }) => `
+    display: ${$isCurrentImage ? "flex" : "none"};
+  `}
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px;
 `;
 
 const CarouselControlRow = styled.View`
@@ -113,7 +127,7 @@ const GalleryScreen = ({
         data={imageUrls}
         showsHorizontalScrollIndicator={false}
         scrollEnabled={false}
-        renderItem={({ item: imageUrl }) => (
+        renderItem={({ item: imageUrl, index }) => (
           <PhraseImage
             source={{ uri: imageUrl }}
             style={{
@@ -133,6 +147,12 @@ const GalleryScreen = ({
               }),
             }}
           />
+          >
+            <PhraseImageCtaButtonRow $isCurrentImage={currentIndex === index}>
+              <PhraseImageDownloadButton imageUrl={imageUrl} />
+              <PhraseImageShareButton imageUrl={imageUrl} />
+            </PhraseImageCtaButtonRow>
+          </PhraseImage>
         )}
         contentContainerStyle={{
           gap: 16,
