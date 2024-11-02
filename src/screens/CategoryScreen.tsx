@@ -55,8 +55,8 @@ const CategoryScreen = ({
         data={imageUrls}
         numColumns={2}
         keyExtractor={(imageUrl) => imageUrl}
-        renderItem={({ item: imageUrl }) => (
-          <PhraseImageButton imageUrl={imageUrl} />
+        renderItem={({ item: imageUrl, index }) => (
+          <PhraseImageButton imageUrl={imageUrl} imageIndex={index} />
         )}
         showsVerticalScrollIndicator={false}
         columnWrapperStyle={{

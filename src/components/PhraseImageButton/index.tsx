@@ -24,15 +24,16 @@ const PhraseImage = styled.Image`
 
 interface Props {
   imageUrl: string;
+  imageIndex: number;
 }
 
-const PhraseImageButton = ({ imageUrl }: Props) => {
+const PhraseImageButton = ({ imageUrl, imageIndex }: Props) => {
   const navigation = useNavigation();
   const route = useRoute<RootRouteProps<ScreenName.Category>>();
 
   const onPress = () => {
     navigation.navigate(ScreenName.Gallery, {
-      enteredImageUrl: imageUrl,
+      enteredImageIndex: imageIndex,
       category: route.params.category,
     });
   };
