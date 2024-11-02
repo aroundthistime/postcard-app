@@ -11,8 +11,7 @@ import {
 import { RootStackParamList, ScreenName } from "../types/Screen";
 import usePhraseImageInfiniteQuery from "../hooks/queries/usePhraseImageInfiniteQuery";
 import { useEffect, useMemo, useRef, useState } from "react";
-import styled from "@emotion/native/macro";
-import { css } from "@emotion/react";
+import styled, { css } from "@emotion/native/";
 import IcArrowLeftBase from "../assets/images/icons/icArrowLeft.svg";
 import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
 
@@ -54,14 +53,17 @@ const CarouselControlButton = styled.TouchableOpacity<{
     `margin-${$position === "left" ? "right" : "left"}: auto;`}
 `;
 
-const IcArrowLeft = styled(IcArrowLeftBase)`
+const CarouselButtonIconCss = css`
   width: 24px;
   height: 24px;
 `;
 
+const IcArrowLeft = styled(IcArrowLeftBase)`
+  ${CarouselButtonIconCss}
+`;
+
 const IcArrowRight = styled(IcArrowRightBase)`
-  width: 24px;
-  height: 24px;
+  ${CarouselButtonIconCss}
 `;
 
 type Props = NativeStackScreenProps<RootStackParamList, ScreenName.Gallery>;
