@@ -33,6 +33,7 @@ import { RootStackParamList, ScreenName } from "./src/types/Screen";
 import CategoryScreen from "./src/screens/CategoryScreen";
 import TodaysPhraseScreen from "./src/screens/TodaysPhraseScreen";
 import { Category } from "./src/types/Category";
+import GalleryScreen from "./src/screens/GalleryScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -59,6 +60,11 @@ function App(): React.JSX.Element {
                 name={ScreenName.Category}
                 component={CategoryScreen}
                 options={({ route }) => ({ title: route.params.category })}
+              />
+              <Stack.Screen
+                name={ScreenName.Gallery}
+                component={GalleryScreen}
+                options={{ headerShown: false }}
               />
             </Stack.Navigator>
           ) : (
