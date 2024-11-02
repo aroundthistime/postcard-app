@@ -31,6 +31,11 @@ const PhraseImage = styled.ImageBackground`
   aspect-ratio: 296 / 460;
   border-radius: 16px;
   position: relative;
+  // required for setting border-radius on ImageBackground
+  // @see https://stackoverflow.com/a/57616397
+  overflow: hidden;
+`;
+
 const PhraseImageCtaButtonRow = styled.View<{ $isCurrentImage: boolean }>`
   position: absolute;
   bottom: 0;
@@ -132,6 +137,8 @@ const GalleryScreen = ({
             source={{ uri: imageUrl }}
             style={{
               width: imageWidth,
+            }}
+            imageStyle={{
               ...Platform.select({
                 ios: {
                   shadowColor: "rgba(0, 0, 0, 0.15",
@@ -146,7 +153,6 @@ const GalleryScreen = ({
                 },
               }),
             }}
-          />
           >
             <PhraseImageCtaButtonRow $isCurrentImage={currentIndex === index}>
               <PhraseImageDownloadButton imageUrl={imageUrl} />
