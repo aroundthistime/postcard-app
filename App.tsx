@@ -67,7 +67,11 @@ function App(): React.JSX.Element {
                 <Stack.Screen
                   name={ScreenName.Gallery}
                   component={GalleryScreen}
-                  options={{ headerShown: false }}
+                  options={{
+                    headerTransparent: true,
+                    headerTintColor: "white",
+                    headerTitle: "",
+                  }}
                 />
               </Stack.Navigator>
             ) : (
