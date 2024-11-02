@@ -29,12 +29,12 @@ import {
 import theme from "./src/styles/theme";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CategoriesScreen from "./src/screens/CategoriesScreen";
-import { ScreenName } from "./src/types/Screen";
+import { RootStackParamList, ScreenName } from "./src/types/Screen";
 import CategoryScreen from "./src/screens/CategoryScreen";
 import TodaysPhraseScreen from "./src/screens/TodaysPhraseScreen";
 import { Category } from "./src/types/Category";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): React.JSX.Element {
   const [checkedTodaysPhrase, setCheckedTodaysPhrase] = useState(false);
@@ -57,6 +57,7 @@ function App(): React.JSX.Element {
               <Stack.Screen
                 name={ScreenName.Category}
                 component={CategoryScreen}
+                options={({ route }) => ({ title: route.params.category })}
               />
             </Stack.Navigator>
           ) : (

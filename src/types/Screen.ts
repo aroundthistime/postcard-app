@@ -5,8 +5,7 @@ export enum ScreenName {
   Category = "Category",
 }
 
-export interface RootStackParamList
-  extends Record<ScreenName, object | undefined> {
+export type RootStackParamList = {
   [ScreenName.Categories]: undefined;
   [ScreenName.Category]: { category: Category };
-}
+};
