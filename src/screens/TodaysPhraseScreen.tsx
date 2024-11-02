@@ -6,7 +6,8 @@ import { getColors } from "react-native-image-colors";
 import { hexToHSL } from "../utils/color";
 import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
 import HslDebugger from "../components/HslDebugger";
-import { downloadImageFromUrl, shareImage } from "../utils/file";
+import PhraseImageDownloadButton from "../components/PhraseImageCtaButton/PhraseImageDownloadButton";
+import PhraseImageShareButton from "../components/PhraseImageCtaButton/PhraseImageShareButton";
 
 const Container = styled.View`
   flex: 1;
@@ -34,43 +35,23 @@ const ButtonRow = styled.View`
   justify-content: space-between;
   gap: 12px;
 `;
-
-const ButtonTextBase = styled.Text`
-  font-family: Pretendard;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 19.09px;
-`;
-
-const ButtonCss = css`
+const ExitButton = styled.TouchableOpacity`
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 16px;
-`;
-
-const PrimaryButton = styled.TouchableOpacity`
-  ${ButtonCss}
-  height: 48px;
-  background-color: ${({ theme }) => theme.colors.white};
-  color: #000000;
-  flex: 1;
-`;
-
-const PrimaryButtonText = styled(ButtonTextBase)`
-  color: #222222;
-`;
-
-const SecondaryButton = styled.TouchableOpacity`
-  ${ButtonCss}
   height: 56px;
   background-color: rgba(0, 0, 0, 0.4);
   padding: 0 36px;
 `;
 
-const SecondaryButtonText = styled(ButtonTextBase)`
+const ExitButtonText = styled.Text`
   color: ${({ theme }) => theme.colors.white};
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.09px;
 `;
 
 const IcArrowRight = styled(IcArrowRightBase)`
@@ -146,17 +127,13 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
         }}
       />
       <ButtonRow>
-        <PrimaryButton onPress={() => downloadImageFromUrl(imageUrl)}>
-          <PrimaryButtonText>다운로드</PrimaryButtonText>
-        </PrimaryButton>
-        <PrimaryButton onPress={() => shareImage(imageUrl)}>
-          <PrimaryButtonText>공유하기</PrimaryButtonText>
-        </PrimaryButton>
+        <PhraseImageDownloadButton imageUrl={imageUrl} />
+        <PhraseImageShareButton imageUrl={imageUrl} />
       </ButtonRow>
-      <SecondaryButton onPress={handleClose}>
-        <SecondaryButtonText>다른 문구 찾기</SecondaryButtonText>
+      <ExitButton onPress={handleClose}>
+        <ExitButtonText>다른 문구 찾기</ExitButtonText>
         <IcArrowRight />
-      </SecondaryButton>
+      </ExitButton>
       <HslDebugger s={s} setS={setS} l={l} setL={setL} />
     </Container>
   );
