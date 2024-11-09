@@ -65,7 +65,7 @@ const IcArrowRight = styled(IcArrowRightBase)`
  * @TODO Replace with actual image
  */
 const SAMPLE_IMAGE_URL =
-  "https://s3-alpha-sig.figma.com/img/e244/9a7d/6401dc27f0f326432608f8badcf833b2?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=WlPRf~cGMCVlb66ssYuw0~CBgV~SSoQ6YAf2VmUYlAPOUgvZNf7MOm6J9tn7wghRCISewoXZ8z-oQ2cPq32rFSPM8fDe3rfozI9JPyLeOg3F7o-6IvMiPlH4-fnTNj4d-nabHmkfcBkkujVBKNKzBlBNUC0Vu2poj~QD-MawkVEN6w9ak9H~RsAxWvaCVPN1XPUBE7bmiykl8tFJ5u8z52V402OE8oo2J-K5vve1hKY0IueR2lPmCDnxgaIenqHMRJZHdY9HFvpFs1NZnR-5c8Dko-YRgdtmE-GFyMpgdsM0l1P-v7mQ0Ci~qLA9HoVSzxC-e4FfZG-AR-DklUbAQg__";
+  "https://s3-alpha-sig.figma.com/img/b91c/a30f/b329e7ab19bbba782380ab34686a3a6f?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=kXegrZHhNbuYXZDUbG0llNdLqoLGDuAs9vUQqXQ1P~dSNMc~jqicw0t5mqJMjXU7KRmZeoX6JecROqvQm20NdSse9AwjJgiidAGo-6VlZ6KGRh2zlxg5-IpcIqC17791urOFwTWDWiWajFwKEGjJRkdUmLLGz~~5uehjWRx3qDlkzt0wmAB5QC5WPVF87c3X4KSpTWJ-CvifI~AH04MSmic--jHd8dAErlFr4CQjeRTLxdESLplI127KTc3OeAA7eXZAUdCc3QUplqPplGtYVROHt8d8xzviDvZcdqLTbwam5124ObNf-tMDtvzVd7PHp1Cc3LIWpTO~X2HFevw0uQ__";
 
 interface Props {
   handleClose: () => void;
