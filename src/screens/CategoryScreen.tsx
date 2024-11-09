@@ -14,21 +14,22 @@ const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-const NextPageLoaderWrap = styled.View`
-  padding: 15px 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const SkeletonImage = styled(SkeletonBox)`
   flex: 0.5;
   aspect-ratio: 160 / 224;
 `;
 
+const NextPageLoaderWrap = styled.View`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const NextPageLoader = () => (
   <NextPageLoaderWrap>
-    <ActivityIndicator />
+    <ActivityIndicator size={20} color="rgba(0, 0, 0, 0.2)" />
   </NextPageLoaderWrap>
 );
 
