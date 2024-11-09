@@ -69,7 +69,7 @@ const CarouselControlButton = styled.TouchableOpacity<{
   height: 48px;
   border-radius: 16px;
   border: 1px solid rgba(17, 17, 17, 0.08);
-  background-color: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
