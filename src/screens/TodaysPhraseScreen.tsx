@@ -8,6 +8,8 @@ import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
 import HslDebugger from "../components/HslDebugger";
 import PhraseImageDownloadButton from "../components/PhraseImageCtaButton/PhraseImageDownloadButton";
 import PhraseImageShareButton from "../components/PhraseImageCtaButton/PhraseImageShareButton";
+import SkeletonBox from "../components/SkeletonBox";
+import useImageLoad from "../hooks/useImageLoad";
 
 const Container = styled.View`
   flex: 1;
@@ -22,10 +24,30 @@ const TitleText = styled(TitleTextBase)`
   color: ${({ theme }) => theme.colors.white};
 `;
 
+const SkeletonTitle = styled(SkeletonBox)`
+  width: 180px;
+  height: 40px;
+`;
+
 const PhraseImage = styled(Image)`
   flex: 1;
   border-radius: 16px;
   width: 100%;
+`;
+
+const SkeletonImage = styled(SkeletonBox)`
+  flex: 1;
+  width: 100%;
+`;
+
+const SkeletonButtonRow1 = styled(SkeletonBox)`
+  width: 100%;
+  height: 48px;
+`;
+
+const SkeletonButtonRow2 = styled(SkeletonBox)`
+  width: 100%;
+  height: 56px;
 `;
 
 const ButtonRow = styled.View`
@@ -65,7 +87,7 @@ const IcArrowRight = styled(IcArrowRightBase)`
  * @TODO Replace with actual image
  */
 const SAMPLE_IMAGE_URL =
-  "https://s3-alpha-sig.figma.com/img/e244/9a7d/6401dc27f0f326432608f8badcf833b2?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=WlPRf~cGMCVlb66ssYuw0~CBgV~SSoQ6YAf2VmUYlAPOUgvZNf7MOm6J9tn7wghRCISewoXZ8z-oQ2cPq32rFSPM8fDe3rfozI9JPyLeOg3F7o-6IvMiPlH4-fnTNj4d-nabHmkfcBkkujVBKNKzBlBNUC0Vu2poj~QD-MawkVEN6w9ak9H~RsAxWvaCVPN1XPUBE7bmiykl8tFJ5u8z52V402OE8oo2J-K5vve1hKY0IueR2lPmCDnxgaIenqHMRJZHdY9HFvpFs1NZnR-5c8Dko-YRgdtmE-GFyMpgdsM0l1P-v7mQ0Ci~qLA9HoVSzxC-e4FfZG-AR-DklUbAQg__";
+  "https://s3-alpha-sig.figma.com/img/b91c/a30f/b329e7ab19bbba782380ab34686a3a6f?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=kXegrZHhNbuYXZDUbG0llNdLqoLGDuAs9vUQqXQ1P~dSNMc~jqicw0t5mqJMjXU7KRmZeoX6JecROqvQm20NdSse9AwjJgiidAGo-6VlZ6KGRh2zlxg5-IpcIqC17791urOFwTWDWiWajFwKEGjJRkdUmLLGz~~5uehjWRx3qDlkzt0wmAB5QC5WPVF87c3X4KSpTWJ-CvifI~AH04MSmic--jHd8dAErlFr4CQjeRTLxdESLplI127KTc3OeAA7eXZAUdCc3QUplqPplGtYVROHt8d8xzviDvZcdqLTbwam5124ObNf-tMDtvzVd7PHp1Cc3LIWpTO~X2HFevw0uQ__";
 
 interface Props {
   handleClose: () => void;
@@ -83,6 +105,13 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
 
     return `hsl(${h}, ${s}%, ${l}%)`;
   }, [h, s, l]);
+
+  const { isLoading: isLoadingImage } = useImageLoad(imageUrl);
+
+  const isLoading = useMemo(
+    () => isLoadingImage || themeColor === undefined,
+    [themeColor, isLoadingImage]
+  );
 
   const extractHueValueFromImage = async () => {
     const result = await getColors(imageUrl);
@@ -104,37 +133,48 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
         backgroundColor: themeColor,
       }}
     >
-      <StatusBar backgroundColor={themeColor} />
-      <TitleText>오늘의 문구 추천</TitleText>
-      <PhraseImage
-        source={{
-          uri: SAMPLE_IMAGE_URL,
-        }}
-        style={{
-          ...Platform.select({
-            ios: {
-              shadowColor: "rgba(0, 0, 0, 0.15",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowRadius: 4,
-            },
-            android: {
-              elevation: 4,
-            },
-          }),
-        }}
-      />
-      <ButtonRow>
-        <PhraseImageDownloadButton imageUrl={imageUrl} />
-        <PhraseImageShareButton imageUrl={imageUrl} />
-      </ButtonRow>
-      <ExitButton onPress={handleClose}>
-        <ExitButtonText>다른 문구 찾기</ExitButtonText>
-        <IcArrowRight />
-      </ExitButton>
-      <HslDebugger s={s} setS={setS} l={l} setL={setL} />
+      {isLoading ? (
+        <>
+          <SkeletonTitle />
+          <SkeletonImage />
+          <SkeletonButtonRow1 />
+          <SkeletonButtonRow2 />
+        </>
+      ) : (
+        <>
+          <StatusBar backgroundColor={themeColor} />
+          <TitleText>오늘의 문구 추천</TitleText>
+          <PhraseImage
+            source={{
+              uri: SAMPLE_IMAGE_URL,
+            }}
+            style={{
+              ...Platform.select({
+                ios: {
+                  shadowColor: "rgba(0, 0, 0, 0.15",
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowRadius: 4,
+                },
+                android: {
+                  elevation: 4,
+                },
+              }),
+            }}
+          />
+          <ButtonRow>
+            <PhraseImageDownloadButton imageUrl={imageUrl} />
+            <PhraseImageShareButton imageUrl={imageUrl} />
+          </ButtonRow>
+          <ExitButton onPress={handleClose}>
+            <ExitButtonText>다른 문구 찾기</ExitButtonText>
+            <IcArrowRight />
+          </ExitButton>
+          <HslDebugger s={s} setS={setS} l={l} setL={setL} />
+        </>
+      )}
     </Container>
   );
 };

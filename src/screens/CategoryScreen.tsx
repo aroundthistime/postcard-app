@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import Header from "../components/Header";
 import PhraseImageButton from "../components/PhraseImageButton";
 import usePhraseImageInfiniteQuery from "../hooks/queries/usePhraseImageInfiniteQuery";
-import FullScreenLoader from "../components/FullScreenLoader";
+import SkeletonBox from "../components/SkeletonBox";
 
 const Container = styled.View`
   flex: 1;
@@ -14,8 +14,14 @@ const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
+const SkeletonImage = styled(SkeletonBox)`
+  flex: 0.5;
+  aspect-ratio: 160 / 224;
+`;
+
 const NextPageLoaderWrap = styled.View`
-  padding: 15px 0px;
+  width: 100%;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +29,7 @@ const NextPageLoaderWrap = styled.View`
 
 const NextPageLoader = () => (
   <NextPageLoaderWrap>
-    <ActivityIndicator />
+    <ActivityIndicator size={20} color="rgba(0, 0, 0, 0.2)" />
   </NextPageLoaderWrap>
 );
 
@@ -38,12 +44,12 @@ const CategoryScreen = ({
     usePhraseImageInfiniteQuery(category);
 
   const imageUrls = useMemo(() => {
-    return data?.pages.flat() ?? [];
-  }, [data]);
-
-  if (isLoading) {
-    return <FullScreenLoader />;
-  }
+    if (isLoading) {
+      const DUMMY_PLACEHOLDER = ["1", "2", "3", "4", "5", "6", "7", "8"];
+      return DUMMY_PLACEHOLDER;
+    }
+    return data?.pages?.flat() ?? [];
+  }, [data, isLoading]);
 
   return (
     <Container>
@@ -55,9 +61,14 @@ const CategoryScreen = ({
         data={imageUrls}
         numColumns={2}
         keyExtractor={(imageUrl) => imageUrl}
-        renderItem={({ item: imageUrl }) => (
-          <PhraseImageButton imageUrl={imageUrl} />
-        )}
+        scrollEnabled={!isLoading}
+        renderItem={({ item: imageUrl }) => {
+          return isLoading ? (
+            <SkeletonImage />
+          ) : (
+            <PhraseImageButton imageUrl={imageUrl} />
+          );
+        }}
         showsVerticalScrollIndicator={false}
         columnWrapperStyle={{
           justifyContent: "space-between",
