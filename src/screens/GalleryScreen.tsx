@@ -1,19 +1,13 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import {
-  FlatList,
-  useWindowDimensions,
-  Platform,
-  ActivityIndicator,
-} from "react-native";
+import { FlatList, useWindowDimensions, ActivityIndicator } from "react-native";
 import { RootStackParamList, ScreenName } from "../types/Screen";
 import usePhraseImageInfiniteQuery from "../hooks/queries/usePhraseImageInfiniteQuery";
 import { useEffect, useMemo, useRef, useState } from "react";
 import styled, { css } from "@emotion/native/";
 import IcArrowLeftBase from "../assets/images/icons/icArrowLeft.svg";
 import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
-import PhraseImageDownloadButton from "../components/PhraseImageCtaButton/PhraseImageDownloadButton";
-import PhraseImageShareButton from "../components/PhraseImageCtaButton/PhraseImageShareButton";
 import SkeletonBox from "../components/SkeletonBox";
+import GalleryPhraseImage from "../components/GalleryPhraseImage";
 
 const HORIZONTAL_PADDING = 32;
 
@@ -23,36 +17,11 @@ const ContainerWithBackground = styled.ImageBackground`
   justify-content: center;
   align-items: center;
   gap: 16px;
-`;
-
-const PhraseImageBaseCss = css`
-  aspect-ratio: 296 / 460;
+  background-color: white;
 `;
 
 const SkeletonPhraseImage = styled(SkeletonBox)`
-  ${PhraseImageBaseCss}
-`;
-
-const PhraseImage = styled.ImageBackground`
-  ${PhraseImageBaseCss}
-  border-radius: 16px;
-  position: relative;
-  // required for setting border-radius on ImageBackground
-  // @see https://stackoverflow.com/a/57616397
-  overflow: hidden;
-`;
-
-const PhraseImageCtaButtonRow = styled.View<{ $isCurrentImage: boolean }>`
-  position: absolute;
-  bottom: 0;
-  ${({ $isCurrentImage }) => `
-    display: ${$isCurrentImage ? "flex" : "none"};
-  `}
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 12px;
+  aspect-ratio: 296 / 460;
 `;
 
 const CarouselControlRow = styled.View`
@@ -166,33 +135,8 @@ const GalleryScreen = ({
             />
           ) : null
         }
-        renderItem={({ item: imageUrl, index }) => (
-          <PhraseImage
-            source={{ uri: imageUrl }}
-            style={{
-              width: imageWidth,
-            }}
-            imageStyle={{
-              ...Platform.select({
-                ios: {
-                  shadowColor: "rgba(0, 0, 0, 0.15",
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowRadius: 4,
-                },
-                android: {
-                  elevation: 4,
-                },
-              }),
-            }}
-          >
-            <PhraseImageCtaButtonRow $isCurrentImage={currentIndex === index}>
-              <PhraseImageDownloadButton imageUrl={imageUrl} />
-              <PhraseImageShareButton imageUrl={imageUrl} />
-            </PhraseImageCtaButtonRow>
-          </PhraseImage>
+        renderItem={({ item: imageUrl }) => (
+          <GalleryPhraseImage imageUrl={imageUrl} imageWidth={imageWidth} />
         )}
         contentContainerStyle={{
           gap: 16,
