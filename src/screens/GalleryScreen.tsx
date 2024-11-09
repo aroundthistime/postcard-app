@@ -1,5 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FlatList, useWindowDimensions, Platform } from "react-native";
+import {
+  FlatList,
+  useWindowDimensions,
+  Platform,
+  ActivityIndicator,
+} from "react-native";
 import { RootStackParamList, ScreenName } from "../types/Screen";
 import usePhraseImageInfiniteQuery from "../hooks/queries/usePhraseImageInfiniteQuery";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -8,6 +13,7 @@ import IcArrowLeftBase from "../assets/images/icons/icArrowLeft.svg";
 import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
 import PhraseImageDownloadButton from "../components/PhraseImageCtaButton/PhraseImageDownloadButton";
 import PhraseImageShareButton from "../components/PhraseImageCtaButton/PhraseImageShareButton";
+import SkeletonBox from "../components/SkeletonBox";
 
 const HORIZONTAL_PADDING = 32;
 
@@ -19,8 +25,16 @@ const ContainerWithBackground = styled.ImageBackground`
   gap: 16px;
 `;
 
-const PhraseImage = styled.ImageBackground`
+const PhraseImageBaseCss = css`
   aspect-ratio: 296 / 460;
+`;
+
+const SkeletonPhraseImage = styled(SkeletonBox)`
+  ${PhraseImageBaseCss}
+`;
+
+const PhraseImage = styled.ImageBackground`
+  ${PhraseImageBaseCss}
   border-radius: 16px;
   position: relative;
   // required for setting border-radius on ImageBackground
@@ -121,8 +135,8 @@ const GalleryScreen = ({
   }, [enteredImageUrl]);
 
   const isShowLeftSwipeButton = currentIndex !== 0;
-  const isShowRightSwipeButton =
-    currentIndex !== imageUrls.length - 1 || isFetchingNextPage;
+  const isLastImage = currentIndex !== imageUrls.length - 1;
+  const isShowRightSwipeButton = isLastImage || isFetchingNextPage;
 
   return (
     <ContainerWithBackground
@@ -143,6 +157,15 @@ const GalleryScreen = ({
           }
         }}
         onEndReachedThreshold={1}
+        ListFooterComponent={
+          isFetchingNextPage ? (
+            <SkeletonPhraseImage
+              style={{
+                width: imageWidth,
+              }}
+            />
+          ) : null
+        }
         renderItem={({ item: imageUrl, index }) => (
           <PhraseImage
             source={{ uri: imageUrl }}
@@ -198,8 +221,13 @@ const GalleryScreen = ({
               );
             }}
             $position="right"
+            disabled={!isLastImage}
           >
-            <IcArrowRight />
+            {isFetchingNextPage ? (
+              <ActivityIndicator size={20} color="#FFFFFF" />
+            ) : (
+              <IcArrowRight />
+            )}
           </CarouselControlButton>
         )}
       </CarouselControlRow>
