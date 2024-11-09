@@ -8,6 +8,7 @@ import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
 import HslDebugger from "../components/HslDebugger";
 import PhraseImageDownloadButton from "../components/PhraseImageCtaButton/PhraseImageDownloadButton";
 import PhraseImageShareButton from "../components/PhraseImageCtaButton/PhraseImageShareButton";
+import SkeletonBox from "../components/SkeletonBox";
 
 const Container = styled.View`
   flex: 1;
@@ -22,10 +23,30 @@ const TitleText = styled(TitleTextBase)`
   color: ${({ theme }) => theme.colors.white};
 `;
 
+const SkeletonTitle = styled(SkeletonBox)`
+  width: 180px;
+  height: 40px;
+`;
+
 const PhraseImage = styled(Image)`
   flex: 1;
   border-radius: 16px;
   width: 100%;
+`;
+
+const SkeletonImage = styled(SkeletonBox)`
+  flex: 1;
+  width: 100%;
+`;
+
+const SkeletonButtonRow1 = styled(SkeletonBox)`
+  width: 100%;
+  height: 48px;
+`;
+
+const SkeletonButtonRow2 = styled(SkeletonBox)`
+  width: 100%;
+  height: 56px;
 `;
 
 const ButtonRow = styled.View`
@@ -84,6 +105,8 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
     return `hsl(${h}, ${s}%, ${l}%)`;
   }, [h, s, l]);
 
+  const isLoading = useMemo(() => themeColor === undefined, [themeColor]);
+
   const extractHueValueFromImage = async () => {
     const result = await getColors(imageUrl);
     if (result.platform === "web") return;
@@ -104,37 +127,48 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
         backgroundColor: themeColor,
       }}
     >
-      <StatusBar backgroundColor={themeColor} />
-      <TitleText>오늘의 문구 추천</TitleText>
-      <PhraseImage
-        source={{
-          uri: SAMPLE_IMAGE_URL,
-        }}
-        style={{
-          ...Platform.select({
-            ios: {
-              shadowColor: "rgba(0, 0, 0, 0.15",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowRadius: 4,
-            },
-            android: {
-              elevation: 4,
-            },
-          }),
-        }}
-      />
-      <ButtonRow>
-        <PhraseImageDownloadButton imageUrl={imageUrl} />
-        <PhraseImageShareButton imageUrl={imageUrl} />
-      </ButtonRow>
-      <ExitButton onPress={handleClose}>
-        <ExitButtonText>다른 문구 찾기</ExitButtonText>
-        <IcArrowRight />
-      </ExitButton>
-      <HslDebugger s={s} setS={setS} l={l} setL={setL} />
+      {isLoading ? (
+        <>
+          <SkeletonTitle />
+          <SkeletonImage />
+          <SkeletonButtonRow1 />
+          <SkeletonButtonRow2 />
+        </>
+      ) : (
+        <>
+          <StatusBar backgroundColor={themeColor} />
+          <TitleText>오늘의 문구 추천</TitleText>
+          <PhraseImage
+            source={{
+              uri: SAMPLE_IMAGE_URL,
+            }}
+            style={{
+              ...Platform.select({
+                ios: {
+                  shadowColor: "rgba(0, 0, 0, 0.15",
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowRadius: 4,
+                },
+                android: {
+                  elevation: 4,
+                },
+              }),
+            }}
+          />
+          <ButtonRow>
+            <PhraseImageDownloadButton imageUrl={imageUrl} />
+            <PhraseImageShareButton imageUrl={imageUrl} />
+          </ButtonRow>
+          <ExitButton onPress={handleClose}>
+            <ExitButtonText>다른 문구 찾기</ExitButtonText>
+            <IcArrowRight />
+          </ExitButton>
+          <HslDebugger s={s} setS={setS} l={l} setL={setL} />
+        </>
+      )}
     </Container>
   );
 };
