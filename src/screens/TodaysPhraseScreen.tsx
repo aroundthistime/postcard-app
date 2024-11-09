@@ -9,6 +9,7 @@ import HslDebugger from "../components/HslDebugger";
 import PhraseImageDownloadButton from "../components/PhraseImageCtaButton/PhraseImageDownloadButton";
 import PhraseImageShareButton from "../components/PhraseImageCtaButton/PhraseImageShareButton";
 import SkeletonBox from "../components/SkeletonBox";
+import useImageLoad from "../hooks/useImageLoad";
 
 const Container = styled.View`
   flex: 1;
@@ -96,7 +97,6 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
   const [h, setH] = useState<number>();
   const [s, setS] = useState("29");
   const [l, setL] = useState("41");
-  const [isLoadingImage, setIsLoadingImage] = useState(true);
 
   const imageUrl = SAMPLE_IMAGE_URL;
 
@@ -105,6 +105,8 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
 
     return `hsl(${h}, ${s}%, ${l}%)`;
   }, [h, s, l]);
+
+  const { isLoading: isLoadingImage } = useImageLoad(imageUrl);
 
   const isLoading = useMemo(
     () => isLoadingImage || themeColor === undefined,
@@ -123,9 +125,6 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
 
   useLayoutEffect(() => {
     extractHueValueFromImage();
-    Image.prefetch(imageUrl).finally(() => {
-      setIsLoadingImage(false);
-    });
   }, []);
 
   return (
