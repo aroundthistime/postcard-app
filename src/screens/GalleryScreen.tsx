@@ -104,8 +104,8 @@ const GalleryScreen = ({
   }, [enteredImageUrl]);
 
   const isShowLeftSwipeButton = currentIndex !== 0;
-  const isLastImage = currentIndex !== imageUrls.length - 1;
-  const isShowRightSwipeButton = isLastImage || isFetchingNextPage;
+  const isLastImage = currentIndex === imageUrls.length - 1;
+  const isShowRightSwipeButton = !isLastImage || isFetchingNextPage;
 
   return (
     <ContainerWithBackground
@@ -165,7 +165,7 @@ const GalleryScreen = ({
               );
             }}
             $position="right"
-            disabled={!isLastImage}
+            disabled={isLastImage}
           >
             {isLastImage && isFetchingNextPage ? (
               <ActivityIndicator size={20} color="#FFFFFF" />
