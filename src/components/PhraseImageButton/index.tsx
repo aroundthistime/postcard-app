@@ -1,20 +1,31 @@
-import styled from "@emotion/native/";
+import styled, { css } from "@emotion/native/";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { RootRouteProps, ScreenName } from "../../types/Screen";
+import SkeletonBox from "../SkeletonBox";
+import { Image } from "react-native";
+
+const ContainerBaseCss = css`
+  aspect-ratio: 160 / 224;
+  flex: 0.5;
+`;
+
+const SkeletonContainer = styled(SkeletonBox)`
+  ${ContainerBaseCss}
+`;
 
 const Container = styled.TouchableOpacity`
-  aspect-ratio: 160 / 224;
-  height: 200px;
+  ${ContainerBaseCss}
   border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 16px;
-  flex: 0.5;
   overflow: hidden;
+  box-sizing: border-box;
 `;
 
 const PhraseImage = styled.Image`
   width: 100%;
   height: 100%;
+  border-radius: 16px;
 `;
 
 interface Props {
@@ -24,6 +35,7 @@ interface Props {
 const PhraseImageButton = ({ imageUrl }: Props) => {
   const navigation = useNavigation();
   const route = useRoute<RootRouteProps<ScreenName.Category>>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const onPress = () => {
     navigation.navigate(ScreenName.Gallery, {
@@ -32,9 +44,22 @@ const PhraseImageButton = ({ imageUrl }: Props) => {
     });
   };
 
+  useEffect(() => {
+    Image.prefetch(imageUrl).finally(() => {
+      setIsLoading(false);
+    });
+  }, [imageUrl]);
+
+  if (isLoading) {
+    return <SkeletonContainer />;
+  }
+
   return (
-    <Container onPress={onPress}>
-      <PhraseImage source={{ uri: imageUrl }} />
+    <Container onPress={onPress} disabled={isLoading}>
+      <PhraseImage
+        source={{ uri: imageUrl }}
+        // onLoadEnd={() => setIsLoading(false)}
+      />
     </Container>
   );
 };

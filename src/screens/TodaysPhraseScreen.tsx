@@ -96,6 +96,7 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
   const [h, setH] = useState<number>();
   const [s, setS] = useState("29");
   const [l, setL] = useState("41");
+  const [isLoadingImage, setIsLoadingImage] = useState(true);
 
   const imageUrl = SAMPLE_IMAGE_URL;
 
@@ -105,7 +106,10 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
     return `hsl(${h}, ${s}%, ${l}%)`;
   }, [h, s, l]);
 
-  const isLoading = useMemo(() => themeColor === undefined, [themeColor]);
+  const isLoading = useMemo(
+    () => isLoadingImage || themeColor === undefined,
+    [themeColor, isLoadingImage]
+  );
 
   const extractHueValueFromImage = async () => {
     const result = await getColors(imageUrl);
@@ -119,6 +123,9 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
 
   useLayoutEffect(() => {
     extractHueValueFromImage();
+    Image.prefetch(imageUrl).finally(() => {
+      setIsLoadingImage(false);
+    });
   }, []);
 
   return (
