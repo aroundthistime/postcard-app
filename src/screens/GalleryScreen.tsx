@@ -223,7 +223,7 @@ const GalleryScreen = ({
             $position="right"
             disabled={!isLastImage}
           >
-            {isFetchingNextPage ? (
+            {isLastImage && isFetchingNextPage ? (
               <ActivityIndicator size={20} color="#FFFFFF" />
             ) : (
               <IcArrowRight />
