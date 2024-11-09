@@ -9,7 +9,7 @@ const Container = styled.TouchableOpacity`
   border: 2px solid #1d3421;
   height: 200px;
   border-radius: 48px;
-  flex: 1;
+  flex: 0.5;
   overflow: hidden;
 `;
 

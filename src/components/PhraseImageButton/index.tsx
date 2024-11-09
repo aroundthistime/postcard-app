@@ -1,10 +1,5 @@
 import styled from "@emotion/native/";
-import {
-  ParamListBase,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { memo } from "react";
 import { RootRouteProps, ScreenName } from "../../types/Screen";
 
@@ -13,7 +8,7 @@ const Container = styled.TouchableOpacity`
   height: 200px;
   border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 16px;
-  flex: 1;
+  flex: 0.5;
   overflow: hidden;
 `;
 
