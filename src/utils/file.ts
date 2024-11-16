@@ -51,7 +51,7 @@ const requestStoragePermission = async () => {
       {
         title: "Storage Permission Required",
         message: "App needs access to your storage to download images",
-        buttonPositive: "ㅇㅅㅇ!!",
+        buttonPositive: "Confirm",
       }
     );
     return granted === PermissionsAndroid.RESULTS.GRANTED;
