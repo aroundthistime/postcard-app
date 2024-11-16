@@ -35,7 +35,7 @@ const usePhraseImageInfiniteQuery = (category: Category) => {
       try {
         const result = (await googleDrive.files.list({
           q: `'${categoryDirectoryId}' in parents and mimeType != 'application/vnd.google-apps.folder'`,
-          fields: "nextPageToken, files(id)",
+          fields: "nextPageToken, files(webContentLink)",
           pageSize: 10,
           ...(pageParam
             ? {
@@ -44,15 +44,13 @@ const usePhraseImageInfiniteQuery = (category: Category) => {
             : {}),
         })) as {
           files: {
-            id: string;
+            webContentLink: string;
           }[];
           nextPageToken?: string;
         };
 
         return {
-          imageUrls: result.files.map(
-            (file) => `https://drive.google.com/uc?id=${file.id}`
-          ),
+          imageUrls: result.files.map((file) => file.webContentLink),
           nextPageToken: result.nextPageToken,
         };
       } catch (err) {
