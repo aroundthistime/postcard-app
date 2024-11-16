@@ -1,6 +1,9 @@
 import { Category } from "../../types/Category";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getGoogleDrive } from "../../utils/googleDriveApi";
+import {
+  getGoogleDrive,
+  withGoogleAuthFailRetry,
+} from "../../utils/googleDriveApi";
 import Config from "react-native-config";
 
 const useCategoryDirectoryId = (category: string) => {
@@ -9,11 +12,13 @@ const useCategoryDirectoryId = (category: string) => {
     queryFn: async () => {
       const googleDrive = await getGoogleDrive();
 
-      const categoryDirectoryQuery = await googleDrive.files.list({
-        q: `'${Config.ROOT_DIRECTORY_ID}' in parents and mimeType = 'application/vnd.google-apps.folder' and name = '${category}'`,
-        fields: "files(id)", // Get the folder's ID
-        pageSize: 1,
-      });
+      const categoryDirectoryQuery = await withGoogleAuthFailRetry(async () =>
+        googleDrive.files.list({
+          q: `'${Config.ROOT_DIRECTORY_ID}' in parents and mimeType = 'application/vnd.google-apps.folder' and name = '${category}'`,
+          fields: "files(id)", // Get the folder's ID
+          pageSize: 1,
+        })
+      );
 
       const categoryDirectoryId = categoryDirectoryQuery.files[0]?.id;
       return categoryDirectoryId;
@@ -33,16 +38,18 @@ const usePhraseImageInfiniteQuery = (category: Category) => {
       const googleDrive = await getGoogleDrive();
 
       try {
-        const result = (await googleDrive.files.list({
-          q: `'${categoryDirectoryId}' in parents and mimeType != 'application/vnd.google-apps.folder'`,
-          fields: "nextPageToken, files(webContentLink)",
-          pageSize: 10,
-          ...(pageParam
-            ? {
-                pageToken: pageParam,
-              }
-            : {}),
-        })) as {
+        const result = (await withGoogleAuthFailRetry(async () =>
+          googleDrive.files.list({
+            q: `'${categoryDirectoryId}' in parents and mimeType != 'application/vnd.google-apps.folder'`,
+            fields: "nextPageToken, files(webContentLink)",
+            pageSize: 10,
+            ...(pageParam
+              ? {
+                  pageToken: pageParam,
+                }
+              : {}),
+          })
+        )) as {
           files: {
             webContentLink: string;
           }[];
