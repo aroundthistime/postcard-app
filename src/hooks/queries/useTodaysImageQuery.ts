@@ -14,15 +14,19 @@ export const useTodaysImageQuery = (dateString: string) => {
       });
 
       const childDirectories = childDirectoriesResponse?.files || [];
-      const randomChildDirectory =
-        childDirectories[Math.floor(Math.random() * childDirectories.length)];
 
-      const imageFilesResponse = await googleDrive.files.list({
-        q: `'${randomChildDirectory.id}' in parents and mimeType contains 'image/' and trashed = false`,
-        fields: "files(id, webContentLink)", // Fetch IDs, names, and mime types of files
-      });
+      const imageFiles = (
+        await Promise.all(
+          childDirectories.map(async (childDirectory) => {
+            const imageFilesResponse = await googleDrive.files.list({
+              q: `'${childDirectory.id}' in parents and mimeType contains 'image/' and trashed = false`,
+              fields: "files(webContentLink)", // Fetch IDs, names, and mime types of files
+            });
+            return imageFilesResponse?.files ?? [];
+          })
+        )
+      ).flat();
 
-      const imageFiles = imageFilesResponse?.files || [];
       return imageFiles[Math.floor(Math.random() * imageFiles.length)]
         .webContentLink;
     },
