@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ActivityIndicator, FlatList, Text } from "react-native";
+import { ActivityIndicator, FlatList } from "react-native";
 import { RootStackParamList, ScreenName } from "../types/Screen";
 import styled from "@emotion/native";
 import { useMemo } from "react";
@@ -48,7 +48,9 @@ const CategoryScreen = ({
       const DUMMY_PLACEHOLDER = ["1", "2", "3", "4", "5", "6", "7", "8"];
       return DUMMY_PLACEHOLDER;
     }
-    return data?.pages?.flat() ?? [];
+
+    if (!data?.pages) return [];
+    return data.pages.map((page) => page.imageUrls).flat();
   }, [data, isLoading]);
 
   return (
