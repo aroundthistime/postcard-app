@@ -138,3 +138,9 @@ logs/
 .env.development.local
 .env.test.local
 .env.production.local
+.env
+
+src/assets/service.json
+gradle
+android/app/release.keystore
+.env

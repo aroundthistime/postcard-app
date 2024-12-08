@@ -1,7 +1,7 @@
 import styled from "@emotion/native";
 import TitleTextBase from "../components/TitleText";
 import { Image, Platform, StatusBar } from "react-native";
-import { useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { getColors } from "react-native-image-colors";
 import { hexToHSL } from "../utils/color";
 import IcArrowRightBase from "../assets/images/icons/icArrowRight.svg";
@@ -10,6 +10,7 @@ import PhraseImageDownloadButton from "../components/PhraseImageCtaButton/Phrase
 import PhraseImageShareButton from "../components/PhraseImageCtaButton/PhraseImageShareButton";
 import SkeletonBox from "../components/SkeletonBox";
 import useImageLoad from "../hooks/useImageLoad";
+import { useTodaysImageQuery } from "../hooks/queries/useTodaysImageQuery";
 
 const Container = styled.View`
   flex: 1;
@@ -83,12 +84,6 @@ const IcArrowRight = styled(IcArrowRightBase)`
   right: 16px;
 `;
 
-/**
- * @TODO Replace with actual image
- */
-const SAMPLE_IMAGE_URL =
-  "https://s3-alpha-sig.figma.com/img/b91c/a30f/b329e7ab19bbba782380ab34686a3a6f?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=kXegrZHhNbuYXZDUbG0llNdLqoLGDuAs9vUQqXQ1P~dSNMc~jqicw0t5mqJMjXU7KRmZeoX6JecROqvQm20NdSse9AwjJgiidAGo-6VlZ6KGRh2zlxg5-IpcIqC17791urOFwTWDWiWajFwKEGjJRkdUmLLGz~~5uehjWRx3qDlkzt0wmAB5QC5WPVF87c3X4KSpTWJ-CvifI~AH04MSmic--jHd8dAErlFr4CQjeRTLxdESLplI127KTc3OeAA7eXZAUdCc3QUplqPplGtYVROHt8d8xzviDvZcdqLTbwam5124ObNf-tMDtvzVd7PHp1Cc3LIWpTO~X2HFevw0uQ__";
-
 interface Props {
   handleClose: () => void;
 }
@@ -97,8 +92,7 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
   const [h, setH] = useState<number>();
   const [s, setS] = useState("29");
   const [l, setL] = useState("41");
-
-  const imageUrl = SAMPLE_IMAGE_URL;
+  const { data: imageUrl, error } = useTodaysImageQuery(Date.toString());
 
   const themeColor = useMemo(() => {
     if (h === undefined) return;
@@ -113,8 +107,14 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
     [themeColor, isLoadingImage]
   );
 
-  const extractHueValueFromImage = async () => {
-    const result = await getColors(imageUrl);
+  useEffect(() => {
+    if (error) {
+      handleClose();
+    }
+  }, [error, handleClose]);
+
+  const extractHueValueFromImage = async (url: string) => {
+    const result = await getColors(url);
     if (result.platform === "web") return;
 
     const dominantColor =
@@ -124,8 +124,10 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
   };
 
   useLayoutEffect(() => {
-    extractHueValueFromImage();
-  }, []);
+    if (imageUrl) {
+      extractHueValueFromImage(imageUrl);
+    }
+  }, [imageUrl]);
 
   return (
     <Container
@@ -133,7 +135,7 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
         backgroundColor: themeColor,
       }}
     >
-      {isLoading ? (
+      {isLoading || !imageUrl ? (
         <>
           <SkeletonTitle />
           <SkeletonImage />
@@ -146,7 +148,7 @@ const TodaysPhraseScreen = ({ handleClose }: Props) => {
           <TitleText>오늘의 문구 추천</TitleText>
           <PhraseImage
             source={{
-              uri: SAMPLE_IMAGE_URL,
+              uri: imageUrl,
             }}
             style={{
               ...Platform.select({

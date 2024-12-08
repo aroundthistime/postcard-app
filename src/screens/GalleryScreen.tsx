@@ -67,7 +67,7 @@ const GalleryScreen = ({
     params: { category, enteredImageUrl },
   },
 }: Props) => {
-  const { data, fetchNextPage, isFetchingNextPage, hasNextPage, isLoading } =
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     usePhraseImageInfiniteQuery(category);
   const carouselRef = useRef<FlatList>(null);
   const { width: screenWidth } = useWindowDimensions();
@@ -75,7 +75,8 @@ const GalleryScreen = ({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const imageUrls = useMemo(() => {
-    return data?.pages.flat() ?? [];
+    if (!data?.pages) return [];
+    return data.pages.map((page) => page.imageUrls).flat();
   }, [data]);
 
   const imageWidth = screenWidth - HORIZONTAL_PADDING * 2;
